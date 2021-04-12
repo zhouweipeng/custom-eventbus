@@ -27,6 +27,7 @@
 <script>
 import childComA from './components/child-com-a.vue'
 import childComB from './components/child-com-b.vue'
+import { onBeforeUnmount } from 'vue'
 import { useStore } from 'vuex'
 import eventbus from './utils/eventbus.js'
 
@@ -47,6 +48,9 @@ export default {
 		eventbus.once('listenerInParent_once', data => {
 			store.commit('addLog', `父组件的一次性监听器被${data.trigger}触发了`)
 		})
+
+		// 在页面销毁前记得解除事件的监听，防止内存泄漏，这里我直接移除了所有监听器
+		onBeforeUnmount(eventbus.off)
 
 		const handers = {
 			emitCurrentPageFn(isOnce) {
