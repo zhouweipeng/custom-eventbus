@@ -13,6 +13,8 @@
 			<child-com-a />
 			<child-com-b />
 			<button @click="unBindAllEvent">解绑所有事件</button>
+			<button @click="emitMultiEvent(false)">触发同时绑定的multiEvent</button>
+			<button @click="emitMultiEvent(true)">触发同时绑定的multiEvent_once</button>
 		</div>
 		<!-- 输出日志 -->
 		<div class="logs-wrapper">
@@ -41,11 +43,12 @@ export default {
 		const store = useStore()
 		const logs = store.state.logs
 
-		eventbus.on('listenerInParent', data => {
+		// 可以传一个字符串，也可以传字符串数组表示监听多个事件
+		eventbus.on(['listenerInParent', 'multiEvent'], data => {
 			store.commit('addLog', `父组件的持续监听器被${data.trigger}触发了`)
 		})
 
-		eventbus.once('listenerInParent_once', data => {
+		eventbus.once(['listenerInParent_once', 'multiEvent_once'], data => {
 			store.commit('addLog', `父组件的一次性监听器被${data.trigger}触发了`)
 		})
 
@@ -64,6 +67,9 @@ export default {
 			},
 			unBindAllEvent() {
 				eventbus.off()
+			},
+			emitMultiEvent(isOnce) {
+				eventbus.emit(`multiEvent${isOnce ? '_once' : ''}`, { trigger: 'multiEvent' })
 			},
 		}
 

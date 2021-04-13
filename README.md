@@ -1,5 +1,13 @@
 # custom-eventbus
 
+## 更新日志
+
+> **2021-04-13**
+
+> 新增：on、once、off可传入字符串数组，同时监听多个事件
+
+## 说明
+
 > 如果访问速度较慢可用[gitee地址](https://gitee.com/zwpjy/custom-eventbus)
 
 > 因为vue3移除了`$on`、`$off`和`$once`这几个全局api，所以尝试手动实现一下
