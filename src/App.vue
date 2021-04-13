@@ -43,7 +43,7 @@ export default {
 		const store = useStore()
 		const logs = store.state.logs
 
-		// 可以传一个字符串，也可以传字符串数组同时表示监听多个事件
+		// 可以传一个字符串，也可以传字符串数组表示监听多个事件
 		eventbus.on(['listenerInParent', 'multiEvent'], data => {
 			store.commit('addLog', `父组件的持续监听器被${data.trigger}触发了`)
 		})
